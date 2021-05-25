@@ -51,7 +51,8 @@ class FormWidgets {
     );
   }
 
-  Widget buildEmail() {
+  Widget buildEmail(TextEditingController _emailController) {
+    emailController = _emailController;
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: 15.0,

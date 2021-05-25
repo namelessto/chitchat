@@ -25,19 +25,7 @@ class Lobby {
     }
   }
 
-  bool searchResult(String searchText) {
-    if (searchText.isNotEmpty) {
-      DataCollector().queryUsersDataNickname2(searchText).then((value) {
-        snapshot = value;
-        if (snapshot.docs.isEmpty) {
-          return false;
-        } else {
-          return true;
-        }
-      });
-    }
-    return false;
-  }
+  void searchResult(String searchText) {}
 
   Widget createChatCard(String uid) {
     return FutureBuilder(

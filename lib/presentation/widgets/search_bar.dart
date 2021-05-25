@@ -33,15 +33,15 @@ class _SearchBarState extends State<SearchBar> {
         ),
         suffixIcon: IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {
-            if (Lobby().searchResult(_controller.text)) {
-              Navigator.push(
+          onPressed: () async {
+            snapshot = await DataCollector().queryUsersDataNickname2(_controller.text);
+            Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SearchResult(snapshot),
-                ),
-              );
-            }
+                  builder: (context) => SearchResult(
+                    snapshot,
+                  ),
+                ));
           },
         ),
       ),

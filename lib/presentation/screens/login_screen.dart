@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); //Needed to control the form
 
   final TextEditingController _pwController1 = new TextEditingController();
+  final TextEditingController _emailController = new TextEditingController();
 
   bool secureText1 = true;
   bool showSpinner = false;
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  formWidgets.buildEmail(),
+                  formWidgets.buildEmail(_emailController),
                   formWidgets.buildPassword(_pwController1, secureText1, changeSecureText1),
                   Row(
                     children: [

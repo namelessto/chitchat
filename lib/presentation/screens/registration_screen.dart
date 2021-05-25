@@ -13,6 +13,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final TextEditingController _pwController1 = new TextEditingController();
   final TextEditingController _pwController2 = new TextEditingController();
+  final TextEditingController _emailController = new TextEditingController();
 
   bool secureText1 = true;
   bool secureText2 = true;
@@ -60,7 +61,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 formWidgets.buildDisplayName(),
-                formWidgets.buildEmail(),
+                formWidgets.buildEmail(_emailController),
                 formWidgets.buildNickname(),
                 formWidgets.buildPassword(
                   _pwController1,
