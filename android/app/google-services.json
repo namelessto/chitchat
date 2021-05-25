@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "926446547575",
+    "project_id": "pitput-a9eb2",
+    "storage_bucket": "pitput-a9eb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926446547575:android:90c7645d1da6340b8b0c72",
+        "android_client_info": {
+          "package_name": "com.nameless.chitchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926446547575-el9kfamhf4ee563ag36e348f1iqe3ts8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHGnN9cth-Ie2Q-z5DNHNtdCav9XFxr6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926446547575-el9kfamhf4ee563ag36e348f1iqe3ts8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926446547575:android:a9d1c294557edcf78b0c72",
+        "android_client_info": {
+          "package_name": "com.namelessto.pitput"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926446547575-el9kfamhf4ee563ag36e348f1iqe3ts8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHGnN9cth-Ie2Q-z5DNHNtdCav9XFxr6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926446547575-el9kfamhf4ee563ag36e348f1iqe3ts8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
