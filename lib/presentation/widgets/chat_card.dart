@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chitchat/presentation/screens/chat_screen.dart';
 
 class ChatCard extends StatelessWidget {
   ChatCard({this.displayName, this.email, this.userID});
@@ -18,14 +19,15 @@ class ChatCard extends StatelessWidget {
         email,
       ),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ChatScreen(
-        //       targetUid: userID,
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              targetUid: userID,
+              targetDisplayName: displayName,
+            ),
+          ),
+        );
       },
     );
   }

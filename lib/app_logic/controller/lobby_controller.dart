@@ -25,8 +25,6 @@ class Lobby {
     }
   }
 
-  void searchResult(String searchText) {}
-
   Widget createChatCard(String uid) {
     return FutureBuilder(
       future: DataCollector().queryUserDataUID(uid),

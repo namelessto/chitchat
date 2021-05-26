@@ -18,7 +18,7 @@ class Login {
         password: password,
       );
       if (user.user.emailVerified) {
-        NavigationScreen().replaceScreen(context, lobbyScreenID);
+        Navigation().replaceScreen(context, lobbyScreenID);
       } else {
         ShowAlert(
           alertTitle: 'Failed',

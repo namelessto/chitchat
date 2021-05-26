@@ -1,26 +1,23 @@
-import 'package:chitchat/app_logic/controller/lobby_controller.dart';
 import 'package:chitchat/data/set_get_db.dart';
+import 'package:chitchat/presentation/widgets/message_bubble.dart';
 import 'package:chitchat/utilities/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ChatsList extends StatefulWidget {
-  ChatsList(this.user);
+class ChatMessages extends StatefulWidget {
+  ChatMessages({this.userUID, this.targetUID});
 
-  final User user;
+  final String userUID;
+  final String targetUID;
 
   @override
-  _ChatsListState createState() => _ChatsListState();
+  _ChatMessagesState createState() => _ChatMessagesState();
 }
 
-class _ChatsListState extends State<ChatsList> {
-  QuerySnapshot<Map<String, dynamic>> userSnapshot;
-
+class _ChatMessagesState extends State<ChatMessages> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: GetData().getUserChatsStreamSnapshots(widget.user),
+    return StreamBuilder(
+      stream: GetData().getChatMessages(widget.userUID, widget.targetUID),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           print('Couldn\'t find data');
@@ -34,10 +31,16 @@ class _ChatsListState extends State<ChatsList> {
             );
           }
           return ListView.builder(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: snapshot.data.docs.length,
             itemBuilder: (context, index) {
-              return Lobby().createChatCard(snapshot.data.docs[index][colUID]);
+              return MessageBubble(
+                displayName: snapshot.data.docs[index][colDisplayName],
+                senderEmail: snapshot.data.docs[index][colEmail],
+                isMe: snapshot.data.docs[index][colUID] == widget.userUID,
+                text: snapshot.data.docs[index][colText],
+              );
             },
           );
         }

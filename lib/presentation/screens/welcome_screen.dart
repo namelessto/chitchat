@@ -38,11 +38,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             RoundedButton(
-              onPress: () => NavigationScreen().changeScreen(context, loginScreenID),
+              onPress: () => Navigation().changeScreen(context, loginScreenID),
               text: 'Login',
             ),
             RoundedButton(
-              onPress: () => NavigationScreen().changeScreen(context, registrationScreenID),
+              onPress: () => Navigation().changeScreen(context, registrationScreenID),
               text: 'Register',
             ),
           ],
