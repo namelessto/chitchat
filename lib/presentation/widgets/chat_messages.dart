@@ -30,18 +30,27 @@ class _ChatMessagesState extends State<ChatMessages> {
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: snapshot.data.docs.length,
-            itemBuilder: (context, index) {
-              return MessageBubble(
-                displayName: snapshot.data.docs[index][colDisplayName],
-                senderEmail: snapshot.data.docs[index][colEmail],
-                isMe: snapshot.data.docs[index][colUID] == widget.userUID,
-                text: snapshot.data.docs[index][colText],
-              );
-            },
+          final messages = snapshot.data.docs.reversed;
+          List<MessageBubble> messageBubbles = [];
+          for (var message in messages) {
+            final messageBubble = MessageBubble(
+              displayName: message.data()[colDisplayName],
+              //TODO: switch to decrypt function
+              text: message.data()[colEncryptedText],
+              senderEmail: message.data()[colEmail],
+              isMe: widget.userUID == message.data()[colUID],
+            );
+            messageBubbles.add(messageBubble);
+          }
+          return Expanded(
+            child: ListView(
+              reverse: true,
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 20.0,
+              ),
+              children: messageBubbles,
+            ),
           );
         }
       },

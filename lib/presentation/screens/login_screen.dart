@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void saveForm() {
     if (_formKey.currentState.validate()) {
       setState(() {
-        showSpinner = !showSpinner;
+        showSpinner = false;
       });
       _formKey.currentState.save();
     }

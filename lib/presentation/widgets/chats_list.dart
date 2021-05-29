@@ -20,7 +20,7 @@ class _ChatsListState extends State<ChatsList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: GetData().getUserChatsStreamSnapshots(widget.user),
+      stream: GetData().getUserChatsStreamSnapshots(widget.user.uid),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           print('Couldn\'t find data');

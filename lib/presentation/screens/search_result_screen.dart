@@ -1,9 +1,7 @@
-import 'package:chitchat/app_logic/controller/lobby_controller.dart';
-import 'package:chitchat/data/search_queries.dart';
-import 'package:chitchat/presentation/widgets/chat_card.dart';
 import 'package:chitchat/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'chat_screen.dart';
 
 class SearchResult extends StatefulWidget {
   SearchResult(this.snapshot);
@@ -17,7 +15,6 @@ class SearchResult extends StatefulWidget {
 class _SearchResultState extends State<SearchResult> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -35,7 +32,15 @@ class _SearchResultState extends State<SearchResult> {
             leading: CircleAvatar(),
             title: Text(widget.snapshot.docs[index][colDisplayName]),
             onTap: () {
-              //TODO: Implement enter to chat
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(
+                    targetUid: widget.snapshot.docs[index][colUID],
+                    targetDisplayName: widget.snapshot.docs[index][colDisplayName],
+                  ),
+                ),
+              );
             },
           );
         },

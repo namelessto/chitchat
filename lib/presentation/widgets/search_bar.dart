@@ -1,4 +1,3 @@
-import 'package:chitchat/app_logic/controller/lobby_controller.dart';
 import 'package:chitchat/data/search_queries.dart';
 import 'package:chitchat/presentation/screens/search_result_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

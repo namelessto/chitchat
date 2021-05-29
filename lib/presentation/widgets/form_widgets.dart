@@ -102,11 +102,15 @@ class FormWidgets {
           }
           DataCollector().queryUsersDataNickname1(value).then((valueSnapshot) {
             snapshot = valueSnapshot;
-            if (snapshot.docs.isNotEmpty) {
-              _nickname = snapshot.docs.first.data()[colNickname];
-              taken = true;
-            } else {
-              taken = false;
+            try {
+              if (snapshot.docs.isNotEmpty) {
+                _nickname = snapshot.docs.first.data()[colNickname];
+                taken = true;
+              } else {
+                taken = false;
+              }
+            } catch (e) {
+              print(e);
             }
           });
           if (taken) {
@@ -237,6 +241,7 @@ class FormWidgets {
     return RoundedButton(
       onPress: () {
         onPress();
+        _formKey = null;
         Login login = new Login(context: context);
         login.loginUser(_email, _password1);
       },

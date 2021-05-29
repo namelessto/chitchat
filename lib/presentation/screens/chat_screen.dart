@@ -14,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _controller = new TextEditingController();
   User loggedUser;
 
   @override
@@ -34,13 +35,27 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              child: ChatMessages(
-                userUID: loggedUser.uid,
-                targetUID: widget.targetUid,
-              ),
+            ChatMessages(
+              userUID: loggedUser.uid,
+              targetUID: widget.targetUid,
             ),
-            TextField(),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send_rounded),
+                  onPressed: () {
+                    if (_controller.text.isNotEmpty) {
+                      Chat().encryptText(loggedUser.uid, widget.targetUid, _controller.text);
+                    }
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ),
