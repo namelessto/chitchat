@@ -36,7 +36,7 @@ class _ChatsListState extends State<ChatsList> {
             shrinkWrap: true,
             itemCount: snapshot.data.docs.length,
             itemBuilder: (context, index) {
-              return Lobby().createChatCard(snapshot.data.docs[index][colUID]);
+              return Lobby().createChatCard(snapshot.data.docs[index][colTID]);
             },
           );
         }

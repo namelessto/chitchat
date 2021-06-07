@@ -15,7 +15,7 @@ class ChatTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'type your message here',
+          hintText: 'Type your message here',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(50.0)),
           ),

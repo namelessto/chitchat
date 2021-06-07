@@ -61,7 +61,15 @@ class GetData {
   final _firestore = FirebaseFirestore.instance;
 
   dynamic getUserChatsStreamSnapshots(String userUID) {
-    return _firestore.collection(colUsers).doc(userUID).collection(colChats).snapshots();
+    return _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .orderBy(
+          colLastMessageSent,
+          descending: true,
+        )
+        .snapshots();
   }
 
   dynamic getUsersStreamSnapshots() {
