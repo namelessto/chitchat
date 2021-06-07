@@ -24,6 +24,22 @@ class SetData {
     });
   }
 
+  void setFirstConversationInfoReceiver(String userUID, String targetUID, String key, String iv) {
+    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).set({
+      colUID: userUID,
+      colTID: targetUID,
+      colKey: key,
+      colIV: iv,
+      colLastMessageSent: FieldValue.serverTimestamp(),
+    });
+  }
+
+  void updateConversationInfo(String userUID, String targetUID) {
+    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).update({
+      colLastMessageSent: FieldValue.serverTimestamp(),
+    });
+  }
+
   void setEncryptedMessageSender(String userUID, String targetUID, String encryptedText) {
     _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).collection(colMessages).add({
       colUID: userUID,
@@ -65,5 +81,9 @@ class GetData {
 
   dynamic getUserChatDetail(String userUID, String targetUID) {
     return _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).get();
+  }
+
+  dynamic getUserChatDetail2(String userUID, String targetUID) {
+    return _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).snapshots();
   }
 }

@@ -6,12 +6,15 @@ class MessageBubble extends StatelessWidget {
     this.senderEmail,
     this.text,
     this.isMe,
+    this.textWidget,
   });
 
   final String displayName;
   final String senderEmail;
   final String text;
   final bool isMe;
+
+  final Widget textWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +30,14 @@ class MessageBubble extends StatelessWidget {
               bottomLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0),
             ),
-            elevation: 5.0,
+            elevation: 3.0,
             color: isMe ? Colors.white70 : Colors.white30,
             child: Padding(
               padding: EdgeInsets.symmetric(
                 vertical: 10.0,
                 horizontal: 20.0,
               ),
-              child: Text(
-                '$text',
-                style: TextStyle(
-                  //color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
+              child: textWidget,
             ),
           ),
         ],

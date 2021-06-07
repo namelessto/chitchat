@@ -43,12 +43,18 @@ class Lobby {
                 displayName: 'Error',
                 email: 'Error',
               );
-            else
+            else {
+              // return ChatCard(
+              //   userID: snapshot.data.docs[0][colUID],
+              //   displayName: snapshot.data.docs[0][colDisplayName],
+              //   email: snapshot.data.docs[0][colEmail],
+              // );
               return ChatCard(
                 userID: snapshot.data.docs.first.data()[colUID],
                 displayName: snapshot.data.docs.first.data()[colDisplayName],
                 email: snapshot.data.docs.first.data()[colEmail],
               );
+            }
         }
       },
     );

@@ -241,7 +241,6 @@ class FormWidgets {
     return RoundedButton(
       onPress: () {
         onPress();
-        _formKey = null;
         Login login = new Login(context: context);
         login.loginUser(_email, _password1);
       },

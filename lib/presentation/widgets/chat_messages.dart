@@ -1,3 +1,4 @@
+import 'package:chitchat/app_logic/controller/chat_controller.dart';
 import 'package:chitchat/data/set_get_db.dart';
 import 'package:chitchat/presentation/widgets/message_bubble.dart';
 import 'package:chitchat/utilities/constants.dart';
@@ -36,6 +37,11 @@ class _ChatMessagesState extends State<ChatMessages> {
             final messageBubble = MessageBubble(
               displayName: message.data()[colDisplayName],
               //TODO: switch to decrypt function
+              textWidget: Chat().decryptText2(
+                widget.userUID,
+                widget.targetUID,
+                message.data()[colEncryptedText],
+              ),
               text: message.data()[colEncryptedText],
               senderEmail: message.data()[colEmail],
               isMe: widget.userUID == message.data()[colUID],

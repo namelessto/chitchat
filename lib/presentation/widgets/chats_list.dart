@@ -23,7 +23,6 @@ class _ChatsListState extends State<ChatsList> {
       stream: GetData().getUserChatsStreamSnapshots(widget.user.uid),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          print('Couldn\'t find data');
           return Center(
             child: CircularProgressIndicator(),
           );

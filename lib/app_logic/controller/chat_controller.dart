@@ -3,6 +3,8 @@ import 'package:chitchat/data/set_get_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Chat {
   final _auth = FirebaseAuth.instance;
@@ -31,9 +33,14 @@ class Chat {
         key = encrypt.Key.fromSecureRandom(32);
         iv = encrypt.IV.fromSecureRandom(16);
         SetData().setFirstConversationInfo(userUID, targetUID, key.base64, iv.base64);
+        if (userUID != targetUID) {
+          SetData().setFirstConversationInfoReceiver(targetUID, userUID, key.base64, iv.base64);
+        }
       } else {
         key = encrypt.Key.fromBase64(value.data()['key']);
         iv = encrypt.IV.fromBase64(value.data()['iv']);
+        SetData().updateConversationInfo(userUID, targetUID);
+        SetData().updateConversationInfo(targetUID, userUID);
       }
       final encrypter = encrypt.Encrypter(encrypt.AES(key));
       final encrypted = encrypter.encrypt(text, iv: iv);
@@ -56,4 +63,54 @@ class Chat {
       return decrypted;
     });
   }
+
+  Widget decryptText2(String userUID, String targetUID, String encryptedText) {
+    Future<DocumentSnapshot<Map<String, dynamic>>> documentFuture = GetData().getUserChatDetail(userUID, targetUID);
+
+    return FutureBuilder(
+      future: documentFuture,
+      builder: (BuildContext context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text('Loading..');
+          default:
+            if (snapshot.hasError)
+              return Text('Error');
+            else {
+              key = encrypt.Key.fromBase64(snapshot.data['key']);
+              iv = encrypt.IV.fromBase64(snapshot.data['iv']);
+
+              final encrypter = encrypt.Encrypter(encrypt.AES(key));
+              final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
+              return Text(decrypted);
+            }
+        }
+      },
+    );
+  }
+
+  // Widget decryptText3(String userUID, String targetUID, String encryptedText) {
+  //   Future<DocumentSnapshot<Map<String, dynamic>>> documentFuture = GetData().getUserChatDetail(userUID, targetUID);
+  //
+  //   return FutureBuilder(
+  //     future: documentFuture,
+  //     builder: (BuildContext context, snapshot) {
+  //       switch (snapshot.connectionState) {
+  //         case ConnectionState.waiting:
+  //           return Text('Loading..');
+  //         default:
+  //           if (snapshot.hasError)
+  //             return Text('Error');
+  //           else {
+  //             key = encrypt.Key.fromBase64(snapshot.data['key']);
+  //             iv = encrypt.IV.fromBase64(snapshot.data['iv']);
+  //
+  //             final encrypter = encrypt.Encrypter(encrypt.AES(key));
+  //             final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
+  //             return Text(decrypted);
+  //           }
+  //       }
+  //     },
+  //   );
+  // }
 }

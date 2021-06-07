@@ -1,5 +1,6 @@
 import 'package:chitchat/app_logic/controller/chat_controller.dart';
 import 'package:chitchat/presentation/widgets/chat_messages.dart';
+import 'package:chitchat/presentation/widgets/chat_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: ChatTextField(
                     controller: _controller,
                   ),
                 ),
@@ -52,6 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     if (_controller.text.isNotEmpty) {
                       Chat().encryptText(loggedUser.uid, widget.targetUid, _controller.text);
                     }
+                    _controller.clear();
                   },
                 ),
               ],
