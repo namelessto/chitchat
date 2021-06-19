@@ -1,6 +1,7 @@
 import 'package:chitchat/data/models/basic_user.dart';
 import 'package:chitchat/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SetData {
   final _firestore = FirebaseFirestore.instance;
@@ -54,6 +55,11 @@ class SetData {
       colEncryptedText: encryptedText,
       colTimeStamp: FieldValue.serverTimestamp(),
     });
+  }
+
+  void updateUserProfile(Map<String, Object> data) {
+    _firestore.collection(colUsers).doc(FirebaseAuth.instance.currentUser.uid).update(data);
+    FirebaseAuth.instance.currentUser.updatePhotoURL(data[colProfileImage]);
   }
 }
 

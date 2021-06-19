@@ -41,6 +41,14 @@ class _LobbyScreenState extends State<LobbyScreen> {
             Navigator.pushReplacementNamed(context, welcomeScreenID);
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, settingScreenID);
+            },
+          ),
+        ],
       ),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,

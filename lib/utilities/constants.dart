@@ -7,6 +7,7 @@ const String loginScreenID = 'login_screen';
 const String lobbyScreenID = 'lobby_screen';
 const String chatScreenID = 'chat_screen';
 const String searchResultID = 'search_result_screen';
+const String settingScreenID = 'setting_screen';
 
 // ---------- Regex ----------
 const String emailRegex = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+$";
@@ -53,3 +54,4 @@ String colLastMessageSent = 'lastMessageSent';
 String colEncryptedText = 'encryptedText';
 String colKey = 'key';
 String colIV = 'iv';
+String colProfileImage = 'profileImage';

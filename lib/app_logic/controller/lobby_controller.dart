@@ -35,6 +35,7 @@ class Lobby {
               userID: 'Loading..',
               displayName: 'Loading..',
               email: 'Loading..',
+              image: null,
             );
           default:
             if (snapshot.hasError)
@@ -42,6 +43,7 @@ class Lobby {
                 userID: 'Error',
                 displayName: 'Error',
                 email: 'Error',
+                image: null,
               );
             else {
               // return ChatCard(
@@ -53,6 +55,7 @@ class Lobby {
                 userID: snapshot.data.docs.first.data()[colUID],
                 displayName: snapshot.data.docs.first.data()[colDisplayName],
                 email: snapshot.data.docs.first.data()[colEmail],
+                image: snapshot.data.docs.first.data()[colProfileImage],
               );
             }
         }

@@ -1,3 +1,4 @@
+import 'package:chitchat/presentation/screens/setting_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -73,6 +74,7 @@ class _ChitchatState extends State<Chitchat> {
         loginScreenID: (context) => LoginScreen(),
         lobbyScreenID: (context) => LobbyScreen(),
         chatScreenID: (context) => ChatScreen(),
+        settingScreenID: (context) => SettingsScreen(),
       },
     );
   }

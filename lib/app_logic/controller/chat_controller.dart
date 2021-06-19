@@ -5,6 +5,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Chat {
   final _auth = FirebaseAuth.instance;
@@ -52,17 +53,17 @@ class Chat {
     });
   }
 
-  String decryptText(String userUID, String targetUID, String encryptedText) {
-    final Future<DocumentSnapshot<Map<String, dynamic>>> snapshot = GetData().getUserChatDetail(userUID, targetUID);
-    snapshot.then((value) {
-      key = encrypt.Key.fromBase64(value.data()['key']);
-      iv = encrypt.IV.fromBase64(value.data()['iv']);
-
-      final encrypter = encrypt.Encrypter(encrypt.AES(key));
-      final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
-      return decrypted;
-    });
-  }
+  // String decryptText(String userUID, String targetUID, String encryptedText) {
+  //   final Future<DocumentSnapshot<Map<String, dynamic>>> snapshot = GetData().getUserChatDetail(userUID, targetUID);
+  //   snapshot.then((value) {
+  //     key = encrypt.Key.fromBase64(value.data()['key']);
+  //     iv = encrypt.IV.fromBase64(value.data()['iv']);
+  //
+  //     final encrypter = encrypt.Encrypter(encrypt.AES(key));
+  //     final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
+  //     return decrypted;
+  //   });
+  // }
 
   Widget decryptText2(String userUID, String targetUID, String encryptedText) {
     Future<DocumentSnapshot<Map<String, dynamic>>> documentFuture = GetData().getUserChatDetail(userUID, targetUID);
@@ -82,35 +83,22 @@ class Chat {
 
               final encrypter = encrypt.Encrypter(encrypt.AES(key));
               final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
-              return Text(decrypted);
+              return GestureDetector(
+                  onLongPress: () => Clipboard.setData(
+                        ClipboardData(
+                          text: decrypted,
+                        ),
+                      ).then(
+                        (value) => ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Message copied to clipboard'),
+                          ),
+                        ),
+                      ),
+                  child: Text(decrypted));
             }
         }
       },
     );
   }
-
-  // Widget decryptText3(String userUID, String targetUID, String encryptedText) {
-  //   Future<DocumentSnapshot<Map<String, dynamic>>> documentFuture = GetData().getUserChatDetail(userUID, targetUID);
-  //
-  //   return FutureBuilder(
-  //     future: documentFuture,
-  //     builder: (BuildContext context, snapshot) {
-  //       switch (snapshot.connectionState) {
-  //         case ConnectionState.waiting:
-  //           return Text('Loading..');
-  //         default:
-  //           if (snapshot.hasError)
-  //             return Text('Error');
-  //           else {
-  //             key = encrypt.Key.fromBase64(snapshot.data['key']);
-  //             iv = encrypt.IV.fromBase64(snapshot.data['iv']);
-  //
-  //             final encrypter = encrypt.Encrypter(encrypt.AES(key));
-  //             final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
-  //             return Text(decrypted);
-  //           }
-  //       }
-  //     },
-  //   );
-  // }
 }

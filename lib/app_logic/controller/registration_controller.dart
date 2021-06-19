@@ -18,7 +18,8 @@ class Registration {
   void makeNewUser(String email, String password, String displayName, String nickname) async {
     try {
       final UserCredential newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      newUser.user.updateProfile(displayName: displayName);
+      //newUser.user.updateProfile(displayName: displayName);
+      newUser.user.updateDisplayName(displayName);
       newUser.user.sendEmailVerification();
       BasicUser newUserDB = new BasicUser(displayName, email, nickname, newUser.user.uid);
       SetData().setNewUser(newUserDB);
