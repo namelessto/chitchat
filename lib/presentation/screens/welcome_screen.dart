@@ -23,18 +23,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: 150.0,
-              child: AnimatedTextKit(
-                repeatForever: true,
-                animatedTexts: [
-                  FlickerAnimatedText(
-                    'CHITCHAT',
-                    textAlign: TextAlign.center,
-                    textStyle: TextStyle(
-                      fontSize: 75.0,
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width,
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  animatedTexts: [
+                    FlickerAnimatedText(
+                      'CHITCHAT',
+                      textAlign: TextAlign.center,
+                      // textStyle: TextStyle(
+                      //   fontSize: 75.0,
+                      // ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             RoundedButton(
