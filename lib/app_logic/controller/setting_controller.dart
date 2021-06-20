@@ -12,11 +12,10 @@ class Setting {
   final picker = ImagePicker();
 
   Future<File> getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
     }
-    print('profile picture type is ${profileImage.runtimeType}');
     return profileImage;
   }
 

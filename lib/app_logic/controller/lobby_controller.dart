@@ -1,4 +1,5 @@
 import 'package:chitchat/data/search_queries.dart';
+import 'package:chitchat/data/set_get_db.dart';
 import 'package:chitchat/presentation/widgets/chat_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +26,7 @@ class Lobby {
     }
   }
 
-  Widget createChatCard(String uid) {
+  Widget createChatCardFuture(String uid) {
     return FutureBuilder(
       future: DataCollector().queryUserDataUID(uid),
       builder: (BuildContext context, snapshot) {
@@ -56,6 +57,40 @@ class Lobby {
                 displayName: snapshot.data.docs.first.data()[colDisplayName],
                 email: snapshot.data.docs.first.data()[colEmail],
                 image: snapshot.data.docs.first.data()[colProfileImage],
+              );
+            }
+        }
+      },
+    );
+  }
+
+  Widget createChatCardStream(String uid) {
+    Stream stream = GetData().getUserDataUID(uid);
+    return StreamBuilder(
+      stream: stream,
+      builder: (BuildContext context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return ChatCard(
+              userID: 'Loading..',
+              displayName: 'Loading..',
+              email: 'Loading..',
+              image: null,
+            );
+          default:
+            if (snapshot.hasError)
+              return ChatCard(
+                userID: 'Error',
+                displayName: 'Error',
+                email: 'Error',
+                image: null,
+              );
+            else {
+              return ChatCard(
+                userID: snapshot.data[colUID],
+                displayName: snapshot.data[colDisplayName],
+                email: snapshot.data[colEmail],
+                image: snapshot.data[colProfileImage],
               );
             }
         }

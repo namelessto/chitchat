@@ -45,9 +45,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           CircleAvatar(
             radius: 100.0,
             backgroundImage: profileImage == null
-                ? FirebaseAuth.instance.currentUser.photoURL != null
-                    ? NetworkImage(FirebaseAuth.instance.currentUser.photoURL)
-                    : AssetImage('assets/profile-pic.png')
+                ? FirebaseAuth.instance.currentUser.photoURL == null
+                    ? AssetImage('assets/profile-pic.png')
+                    : NetworkImage(FirebaseAuth.instance.currentUser.photoURL)
                 : FileImage(profileImage),
             backgroundColor: Colors.transparent,
           ),

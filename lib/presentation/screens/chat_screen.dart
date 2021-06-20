@@ -18,6 +18,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = new TextEditingController();
   User loggedUser;
 
+  bool isRTL = false;
+
   @override
   void initState() {
     super.initState();

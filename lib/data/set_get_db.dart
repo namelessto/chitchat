@@ -100,4 +100,8 @@ class GetData {
   dynamic getUserChatDetail2(String userUID, String targetUID) {
     return _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).snapshots();
   }
+
+  dynamic getUserDataUID(String userUID) {
+    return _firestore.collection(colUsers).doc(userUID).snapshots();
+  }
 }

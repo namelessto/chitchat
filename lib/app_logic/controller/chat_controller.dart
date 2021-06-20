@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:auto_direction/auto_direction.dart';
 import 'package:chitchat/data/set_get_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -53,19 +54,7 @@ class Chat {
     });
   }
 
-  // String decryptText(String userUID, String targetUID, String encryptedText) {
-  //   final Future<DocumentSnapshot<Map<String, dynamic>>> snapshot = GetData().getUserChatDetail(userUID, targetUID);
-  //   snapshot.then((value) {
-  //     key = encrypt.Key.fromBase64(value.data()['key']);
-  //     iv = encrypt.IV.fromBase64(value.data()['iv']);
-  //
-  //     final encrypter = encrypt.Encrypter(encrypt.AES(key));
-  //     final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
-  //     return decrypted;
-  //   });
-  // }
-
-  Widget decryptText2(String userUID, String targetUID, String encryptedText) {
+  Widget decryptText(String userUID, String targetUID, String encryptedText) {
     Future<DocumentSnapshot<Map<String, dynamic>>> documentFuture = GetData().getUserChatDetail(userUID, targetUID);
 
     return FutureBuilder(
@@ -96,6 +85,47 @@ class Chat {
                         ),
                       ),
                   child: Text(decrypted));
+            }
+        }
+      },
+    );
+  }
+
+  Widget decryptText2(String userUID, String targetUID, String encryptedText) {
+    Stream stream = GetData().getUserChatDetail2(userUID, targetUID);
+
+    return StreamBuilder(
+      stream: stream,
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text('Loading..');
+          default:
+            if (snapshot.hasError)
+              return Text('Error');
+            else {
+              key = encrypt.Key.fromBase64(snapshot.data['key']);
+              iv = encrypt.IV.fromBase64(snapshot.data['iv']);
+
+              final encrypter = encrypt.Encrypter(encrypt.AES(key));
+              final decrypted = encrypter.decrypt64(encryptedText, iv: iv);
+              return GestureDetector(
+                onLongPress: () => Clipboard.setData(
+                  ClipboardData(
+                    text: decrypted,
+                  ),
+                ).then(
+                  (value) => ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Message copied to clipboard'),
+                    ),
+                  ),
+                ),
+                child: AutoDirection(
+                  text: decrypted,
+                  child: Text(decrypted),
+                ),
+              );
             }
         }
       },
