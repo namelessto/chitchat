@@ -1,8 +1,9 @@
+import 'dart:io';
 import 'package:chitchat/app_logic/controller/setting_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -53,7 +54,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           TextButton(
             onPressed: () async {
-              profileImage = await Setting().getImage();
+              PermissionStatus status = await Setting().getPermissionForStorage();
+              if (status.isGranted) {
+                profileImage = await Setting().getImage();
+              }
               setState(() {});
             },
             child: Text('Change picture'),

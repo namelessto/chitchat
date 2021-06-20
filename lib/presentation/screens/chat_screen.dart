@@ -53,6 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   icon: Icon(Icons.send_rounded),
                   onPressed: () {
                     if (_controller.text.isNotEmpty) {
+                      _controller.text = _controller.text.trim();
                       Chat().encryptText(loggedUser.uid, widget.targetUid, _controller.text);
                     }
                     _controller.clear();

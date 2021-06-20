@@ -12,6 +12,7 @@ class SetData {
       colEmail: user.email(),
       colNickname: user.nickname(),
       colUID: user.uid(),
+      colProfileImage: '',
     });
   }
 

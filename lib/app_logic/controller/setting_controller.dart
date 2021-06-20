@@ -5,6 +5,7 @@ import 'package:chitchat/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:permission_handler/permission_handler.dart';
 
 class Setting {
   File profileImage;
@@ -47,5 +48,17 @@ class Setting {
       returnURL = fileURL;
     });
     return returnURL;
+  }
+
+  dynamic getPermissionForStorage() async {
+    PermissionStatus status = await Permission.storage.status;
+    print('status is $status');
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+    if (status.isPermanentlyDenied) {
+      openAppSettings();
+    }
+    return status;
   }
 }

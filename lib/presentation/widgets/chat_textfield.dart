@@ -36,6 +36,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
           onChanged: (str) {
             setState(() {
               text = str;
+              str = str.trimLeft();
             });
           },
           decoration: InputDecoration(
