@@ -22,6 +22,7 @@ class _SearchBarState extends State<SearchBar> {
       autofocus: false,
       controller: _controller,
       decoration: textFieldDecoration.copyWith(
+        hintText: 'Search nickname',
         prefixIcon: IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {

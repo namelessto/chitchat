@@ -29,7 +29,13 @@ class _SearchResultState extends State<SearchResult> {
         itemCount: widget.snapshot.docs.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: CircleAvatar(),
+            leading: CircleAvatar(
+              backgroundImage: widget.snapshot.docs[index][colProfileImage] != null
+                  ? widget.snapshot.docs[index][colProfileImage] != ''
+                      ? NetworkImage(widget.snapshot.docs[index][colProfileImage])
+                      : AssetImage('assets/profile-pic.png')
+                  : AssetImage('assets/profile-pic.png'),
+            ),
             title: Text(widget.snapshot.docs[index][colDisplayName]),
             onTap: () {
               Navigator.push(
