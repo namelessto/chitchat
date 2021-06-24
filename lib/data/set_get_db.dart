@@ -1,3 +1,4 @@
+import 'package:chitchat/app_logic/controller/fcm_controller.dart';
 import 'package:chitchat/data/models/basic_user.dart';
 import 'package:chitchat/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -59,8 +60,16 @@ class SetData {
   }
 
   void updateUserProfile(Map<String, Object> data) {
-    _firestore.collection(colUsers).doc(FirebaseAuth.instance.currentUser.uid).update(data);
-    FirebaseAuth.instance.currentUser.updatePhotoURL(data[colProfileImage]);
+    if (data[colProfileImage] != null && data[colDisplayName] != null) {
+      _firestore.collection(colUsers).doc(FirebaseAuth.instance.currentUser.uid).update(data);
+      FirebaseAuth.instance.currentUser.updatePhotoURL(data[colProfileImage]);
+    }
+  }
+
+  void updateUserDeviceToken() async {
+    _firestore.collection(colUsers).doc(FirebaseAuth.instance.currentUser.uid).update({
+      colDeviceToken: await PushNotificationService().getToken(),
+    });
   }
 }
 

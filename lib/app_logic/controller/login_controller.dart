@@ -1,4 +1,5 @@
 import 'package:chitchat/app_logic/controller/navigation_controller.dart';
+import 'package:chitchat/data/set_get_db.dart';
 import 'package:chitchat/presentation/widgets/alert_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chitchat/utilities/constants.dart';
@@ -18,6 +19,7 @@ class Login {
         password: password,
       );
       if (user.user.emailVerified) {
+        SetData().updateUserDeviceToken();
         Navigation().replaceScreen(context, lobbyScreenID);
       } else {
         ShowAlert(

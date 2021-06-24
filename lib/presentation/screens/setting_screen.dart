@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chitchat/app_logic/controller/setting_controller.dart';
+import 'package:chitchat/presentation/widgets/alert_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  String profileImagePath;
   File profileImage;
 
   TextEditingController controller = new TextEditingController();
@@ -19,6 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     controller.text = FirebaseAuth.instance.currentUser.displayName;
+    profileImagePath = FirebaseAuth.instance.currentUser.photoURL;
   }
 
 //
@@ -34,7 +37,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             icon: Icon(Icons.save),
             onPressed: () async {
               await Setting().updateProfile(profileImage, controller.text);
-              Navigator.pop(context);
+              ShowAlert(
+                alertTitle: 'Success',
+                alertContent: 'Info updated.',
+                btnText: 'OK',
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ).showAlert(context).show();
+              //Navigator.pop(context);
             },
           ),
         ],

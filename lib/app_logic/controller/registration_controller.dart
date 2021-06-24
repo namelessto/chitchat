@@ -1,3 +1,4 @@
+import 'package:chitchat/app_logic/controller/fcm_controller.dart';
 import 'package:chitchat/data/models/basic_user.dart';
 import 'package:chitchat/data/set_get_db.dart';
 import 'package:chitchat/presentation/widgets/alert_dialog.dart';
@@ -21,7 +22,8 @@ class Registration {
       //newUser.user.updateProfile(displayName: displayName);
       newUser.user.updateDisplayName(displayName);
       newUser.user.sendEmailVerification();
-      BasicUser newUserDB = new BasicUser(displayName, email, nickname, newUser.user.uid);
+      BasicUser newUserDB =
+          new BasicUser(displayName, email, nickname, newUser.user.uid, PushNotificationService().getToken());
       SetData().setNewUser(newUserDB);
       ShowAlert(
         alertTitle: 'Success',

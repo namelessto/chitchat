@@ -32,8 +32,9 @@ class Setting {
     if (profileImageUrl != '') {
       data[colProfileImage] = profileImageUrl;
     }
-
-    data[colDisplayName] = displayName;
+    if (displayName != '') {
+      data[colDisplayName] = displayName;
+    }
     SetData().updateUserProfile(data);
   }
 

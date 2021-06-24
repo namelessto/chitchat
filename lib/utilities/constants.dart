@@ -55,3 +55,4 @@ String colEncryptedText = 'encryptedText';
 String colKey = 'key';
 String colIV = 'iv';
 String colProfileImage = 'profileImage';
+String colDeviceToken = 'deviceToken';
