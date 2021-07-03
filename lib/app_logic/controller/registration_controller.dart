@@ -1,4 +1,3 @@
-import 'package:chitchat/app_logic/controller/fcm_controller.dart';
 import 'package:chitchat/data/models/basic_user.dart';
 import 'package:chitchat/data/set_get_db.dart';
 import 'package:chitchat/presentation/widgets/alert_dialog.dart';
@@ -16,18 +15,25 @@ class Registration {
   Future<bool> futureTrue = Future<bool>.value(true);
   BuildContext context;
 
-  void makeNewUser(String email, String password, String displayName, String nickname) async {
+  void makeNewUser(String email, String password, String displayName,
+      String nickname) async {
     try {
-      final UserCredential newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      final UserCredential newUser = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       //newUser.user.updateProfile(displayName: displayName);
       newUser.user.updateDisplayName(displayName);
       newUser.user.sendEmailVerification();
-      BasicUser newUserDB =
-          new BasicUser(displayName, email, nickname, newUser.user.uid, PushNotificationService().getToken());
+      BasicUser newUserDB = new BasicUser(
+        displayName,
+        email,
+        nickname,
+        newUser.user.uid,
+      );
       SetData().setNewUser(newUserDB);
       ShowAlert(
         alertTitle: 'Success',
-        alertContent: 'Registration succeeded.\nPlease verify your mail at:\n$email',
+        alertContent:
+            'Registration succeeded.\nPlease verify your mail at:\n$email',
         btnText: 'OK',
         onPressed: () {
           Navigator.pushReplacementNamed(context, welcomeScreenID);
@@ -38,7 +44,8 @@ class Registration {
       if (e.code == 'email-already-in-use') {
         ShowAlert(
           alertTitle: 'Failed',
-          alertContent: 'Registration failed.\n$email is already in use.\nPlease use another email.',
+          alertContent:
+              'Registration failed.\n$email is already in use.\nPlease use another email.',
           btnText: 'OK',
           onPressed: () {
             Navigator.pop(context);

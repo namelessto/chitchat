@@ -10,7 +10,8 @@ const String searchResultID = 'search_result_screen';
 const String settingScreenID = 'setting_screen';
 
 // ---------- Regex ----------
-const String emailRegex = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+$";
+const String emailRegex =
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+$";
 const String passwordRegex = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
 const String nicknameRegex = r'^[^\s]*$';
 
@@ -56,3 +57,4 @@ String colKey = 'key';
 String colIV = 'iv';
 String colProfileImage = 'profileImage';
 String colDeviceToken = 'deviceToken';
+String colSentNotification = 'sentNotification';

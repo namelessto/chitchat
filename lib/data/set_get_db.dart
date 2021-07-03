@@ -14,11 +14,18 @@ class SetData {
       colNickname: user.nickname(),
       colUID: user.uid(),
       colProfileImage: '',
+      colDeviceToken: '',
     });
   }
 
-  void setFirstConversationInfo(String userUID, String targetUID, String key, String iv) {
-    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).set({
+  void setFirstConversationInfo(
+      String userUID, String targetUID, String key, String iv) {
+    _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .set({
       colUID: userUID,
       colTID: targetUID,
       colKey: key,
@@ -27,8 +34,14 @@ class SetData {
     });
   }
 
-  void setFirstConversationInfoReceiver(String userUID, String targetUID, String key, String iv) {
-    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).set({
+  void setFirstConversationInfoReceiver(
+      String userUID, String targetUID, String key, String iv) {
+    _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .set({
       colUID: userUID,
       colTID: targetUID,
       colKey: key,
@@ -38,22 +51,44 @@ class SetData {
   }
 
   void updateConversationInfo(String userUID, String targetUID) {
-    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).update({
+    _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .update({
       colLastMessageSent: FieldValue.serverTimestamp(),
     });
   }
 
-  void setEncryptedMessageSender(String userUID, String targetUID, String encryptedText) {
-    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).collection(colMessages).add({
+  void setEncryptedMessageSender(
+      String userUID, String targetUID, String encryptedText) {
+    _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .collection(colMessages)
+        .add({
       colUID: userUID,
+      colTID: targetUID,
       colEncryptedText: encryptedText,
       colTimeStamp: FieldValue.serverTimestamp(),
+      colSentNotification: false,
     });
   }
 
-  void setEncryptedMessageReceiver(String userUID, String targetUID, String encryptedText) {
-    _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).collection(colMessages).add({
+  void setEncryptedMessageReceiver(
+      String userUID, String targetUID, String encryptedText) {
+    _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .collection(colMessages)
+        .add({
       colUID: targetUID,
+      colTID: userUID,
       colEncryptedText: encryptedText,
       colTimeStamp: FieldValue.serverTimestamp(),
     });
@@ -61,14 +96,29 @@ class SetData {
 
   void updateUserProfile(Map<String, Object> data) {
     if (data[colProfileImage] != null && data[colDisplayName] != null) {
-      _firestore.collection(colUsers).doc(FirebaseAuth.instance.currentUser.uid).update(data);
+      _firestore
+          .collection(colUsers)
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .update(data);
       FirebaseAuth.instance.currentUser.updatePhotoURL(data[colProfileImage]);
     }
   }
 
   void updateUserDeviceToken() async {
-    _firestore.collection(colUsers).doc(FirebaseAuth.instance.currentUser.uid).update({
+    _firestore
+        .collection(colUsers)
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({
       colDeviceToken: await PushNotificationService().getToken(),
+    });
+  }
+
+  void updateDeviceTokenLogOut() async {
+    _firestore
+        .collection(colUsers)
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({
+      colDeviceToken: '',
     });
   }
 }
@@ -104,11 +154,21 @@ class GetData {
   }
 
   dynamic getUserChatDetail(String userUID, String targetUID) {
-    return _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).get();
+    return _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .get();
   }
 
   dynamic getUserChatDetail2(String userUID, String targetUID) {
-    return _firestore.collection(colUsers).doc(userUID).collection(colChats).doc(targetUID).snapshots();
+    return _firestore
+        .collection(colUsers)
+        .doc(userUID)
+        .collection(colChats)
+        .doc(targetUID)
+        .snapshots();
   }
 
   dynamic getUserDataUID(String userUID) {
