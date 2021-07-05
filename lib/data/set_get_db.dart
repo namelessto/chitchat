@@ -104,6 +104,14 @@ class SetData {
     }
   }
 
+  void deleteUserProfile() {
+    _firestore
+        .collection(colUsers)
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({colProfileImage: ''});
+    FirebaseAuth.instance.currentUser.updatePhotoURL(null);
+  }
+
   void updateUserDeviceToken() async {
     _firestore
         .collection(colUsers)

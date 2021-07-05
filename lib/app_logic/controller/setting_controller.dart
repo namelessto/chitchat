@@ -24,8 +24,8 @@ class Setting {
     String profileImageUrl = '';
 
     if (newProfileImage != null) {
-      profileImageUrl =
-          await uploadFile(newProfileImage, 'user/profile/${FirebaseAuth.instance.currentUser.uid}/profile');
+      profileImageUrl = await uploadFile(newProfileImage,
+          'user/profile/${FirebaseAuth.instance.currentUser.uid}/profile');
     }
 
     Map<String, Object> data = new HashMap();
@@ -39,7 +39,8 @@ class Setting {
   }
 
   Future<String> uploadFile(File _image, String path) async {
-    firebase_storage.Reference storageReference = firebase_storage.FirebaseStorage.instance.ref(path);
+    firebase_storage.Reference storageReference =
+        firebase_storage.FirebaseStorage.instance.ref(path);
 
     firebase_storage.UploadTask uploadTask = storageReference.putFile(_image);
 
@@ -49,6 +50,17 @@ class Setting {
       returnURL = fileURL;
     });
     return returnURL;
+  }
+
+  Future<void> deleteImage() async {
+    try {
+      String path =
+          'user/profile/${FirebaseAuth.instance.currentUser.uid}/profile';
+      firebase_storage.FirebaseStorage.instance.ref(path).delete();
+      SetData().deleteUserProfile();
+    } catch (error) {
+      print(error);
+    }
   }
 
   dynamic getPermissionForStorage() async {

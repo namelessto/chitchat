@@ -65,13 +65,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           TextButton(
             onPressed: () async {
-              PermissionStatus status = await Setting().getPermissionForStorage();
+              PermissionStatus status =
+                  await Setting().getPermissionForStorage();
               if (status.isGranted) {
                 profileImage = await Setting().getImage();
               }
               setState(() {});
             },
             child: Text('Change picture'),
+          ),
+          TextButton(
+            onPressed: () {
+              Setting().deleteImage();
+              setState(() {});
+            },
+            child: Text('Delete picture'),
           ),
           SizedBox(
             height: 50,
