@@ -22,4 +22,24 @@ class ShowAlert {
       ],
     );
   }
+
+  Alert showAlertTwoButtons(context) {
+    return Alert(
+      context: context,
+      title: alertTitle,
+      desc: alertContent,
+      buttons: [
+        DialogButton(
+          child: Text(btnText),
+          onPressed: onPressed,
+        ),
+        DialogButton(
+          child: Text('Cancel'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
 }

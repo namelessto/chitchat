@@ -1,5 +1,6 @@
 import 'package:chitchat/app_logic/controller/lobby_controller.dart';
 import 'package:chitchat/data/set_get_db.dart';
+import 'package:chitchat/presentation/widgets/alert_dialog.dart';
 import 'package:chitchat/presentation/widgets/chats_list.dart';
 import 'package:chitchat/presentation/widgets/search_bar.dart';
 import 'package:chitchat/utilities/constants.dart';
@@ -24,12 +25,14 @@ class _LobbyScreenState extends State<LobbyScreen> {
     // TODO: implement initState
     super.initState();
     loggedUser = Lobby().getCurrentUser();
+
     //print(loggedUser.uid);
     //setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    //print("displayName = " + FirebaseAuth.instance.currentUser.displayName);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,9 +41,15 @@ class _LobbyScreenState extends State<LobbyScreen> {
         leading: IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () {
-            SetData().updateDeviceTokenLogOut();
-            FirebaseAuth.instance.signOut();
-            Navigator.pushReplacementNamed(context, welcomeScreenID);
+            ShowAlert(
+                alertTitle: 'Logout',
+                alertContent: 'Are you sure you want to logout?',
+                btnText: 'Logout',
+                onPressed: () {
+                  SetData().updateDeviceTokenLogOut();
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacementNamed(context, welcomeScreenID);
+                }).showAlertTwoButtons(context).show();
           },
         ),
         actions: [

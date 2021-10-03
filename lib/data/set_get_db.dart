@@ -95,12 +95,13 @@ class SetData {
   }
 
   void updateUserProfile(Map<String, Object> data) {
-    if (data[colProfileImage] != null && data[colDisplayName] != null) {
+    if (data[colDisplayName] != null) {
       _firestore
           .collection(colUsers)
           .doc(FirebaseAuth.instance.currentUser.uid)
           .update(data);
       FirebaseAuth.instance.currentUser.updatePhotoURL(data[colProfileImage]);
+      FirebaseAuth.instance.currentUser.updateDisplayName(data[colDisplayName]);
     }
   }
 

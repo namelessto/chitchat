@@ -9,7 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 class Setting {
   File profileImage;
-
   final picker = ImagePicker();
 
   Future<File> getImage() async {
@@ -65,7 +64,7 @@ class Setting {
 
   dynamic getPermissionForStorage() async {
     PermissionStatus status = await Permission.storage.status;
-    print('status is $status');
+    //print('status is $status');
     if (!status.isGranted) {
       await Permission.storage.request();
     }

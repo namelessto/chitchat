@@ -14,7 +14,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   String profileImagePath;
   File profileImage;
-
+  ImageProvider currentImage;
   TextEditingController controller = new TextEditingController();
 
   @override
@@ -22,12 +22,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     controller.text = FirebaseAuth.instance.currentUser.displayName;
     profileImagePath = FirebaseAuth.instance.currentUser.photoURL;
+    //chooseImage(profileImage);
   }
 
-//
-  //AssetImage('assets/profile-pic.png')
   @override
   Widget build(BuildContext context) {
+    chooseImage(profileImage);
     return Scaffold(
       appBar: AppBar(
         title: Text('Setting'),
@@ -45,7 +45,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.pop(context);
                 },
               ).showAlert(context).show();
-              //Navigator.pop(context);
             },
           ),
         ],
@@ -56,11 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: <Widget>[
           CircleAvatar(
             radius: 100.0,
-            backgroundImage: profileImage == null
-                ? FirebaseAuth.instance.currentUser.photoURL == null
-                    ? AssetImage('assets/profile-pic.png')
-                    : NetworkImage(FirebaseAuth.instance.currentUser.photoURL)
-                : FileImage(profileImage),
+            backgroundImage: currentImage,
             backgroundColor: Colors.transparent,
           ),
           TextButton(
@@ -76,13 +71,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           TextButton(
             onPressed: () {
-              Setting().deleteImage();
-              setState(() {});
+              if (currentImage != AssetImage('assets/profile-pic.png')) {
+                ShowAlert(
+                    alertTitle: 'Delete Your Profile Picture',
+                    alertContent:
+                        'Are you sure you want to delete your profile picture?',
+                    btnText: 'Delete',
+                    onPressed: () async {
+                      setState(() {
+                        profileImage = null;
+                      });
+                      Setting().deleteImage();
+                      Navigator.pop(context);
+                    }).showAlertTwoButtons(context).show();
+              } else {
+                ShowAlert(
+                    alertTitle: 'No Profile Picture',
+                    alertContent: 'No profile image was found',
+                    btnText: 'OK',
+                    onPressed: () {
+                      Navigator.pop(context);
+                      //setState(() {});
+                    }).showAlert(context).show();
+              }
             },
             child: Text('Delete picture'),
           ),
           SizedBox(
-            height: 50,
+            height: 25,
           ),
           Text(
             'Change Display Name',
@@ -97,5 +113,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  void chooseImage(File image) {
+    currentImage = image == null
+        ? profileImagePath == null
+            ? AssetImage('assets/profile-pic.png')
+            : NetworkImage(profileImagePath)
+        : FileImage(image);
   }
 }
