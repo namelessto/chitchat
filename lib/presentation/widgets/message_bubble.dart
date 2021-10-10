@@ -21,7 +21,8 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Material(
             borderRadius: BorderRadius.only(
@@ -31,11 +32,11 @@ class MessageBubble extends StatelessWidget {
               bottomRight: Radius.circular(30.0),
             ),
             elevation: 3.0,
-            color: isMe ? Colors.white70 : Colors.white30,
+            color: isMe ? Color(0xFFE1FFC7) : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                vertical: 10.0,
-                horizontal: 20.0,
+                vertical: 6,
+                horizontal: 13,
               ),
               child: textWidget,
             ),

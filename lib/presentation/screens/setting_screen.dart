@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:chitchat/app_logic/controller/navigation_controller.dart';
 import 'package:chitchat/app_logic/controller/setting_controller.dart';
 import 'package:chitchat/presentation/widgets/alert_dialog.dart';
+import 'package:chitchat/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -29,8 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     chooseImage(profileImage);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Setting'),
+      appBar: NewGradientAppBar(
+        gradient: gradAppBar,
+        title: Text('Settings'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -42,75 +46,81 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 alertContent: 'Info updated.',
                 btnText: 'OK',
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigation().popScreen(context, lobbyScreenID);
+                  Navigation().replaceScreen(context, lobbyScreenID);
                 },
               ).showAlert(context).show();
             },
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          CircleAvatar(
-            radius: 100.0,
-            backgroundImage: currentImage,
-            backgroundColor: Colors.transparent,
-          ),
-          TextButton(
-            onPressed: () async {
-              PermissionStatus status =
-                  await Setting().getPermissionForStorage();
-              if (status.isGranted) {
-                profileImage = await Setting().getImage();
-              }
-              setState(() {});
-            },
-            child: Text('Change picture'),
-          ),
-          TextButton(
-            onPressed: () {
-              if (currentImage != AssetImage('assets/profile-pic.png')) {
-                ShowAlert(
-                    alertTitle: 'Delete Your Profile Picture',
-                    alertContent:
-                        'Are you sure you want to delete your profile picture?',
-                    btnText: 'Delete',
-                    onPressed: () async {
-                      setState(() {
-                        profileImage = null;
-                      });
-                      Setting().deleteImage();
-                      Navigator.pop(context);
-                    }).showAlertTwoButtons(context).show();
-              } else {
-                ShowAlert(
-                    alertTitle: 'No Profile Picture',
-                    alertContent: 'No profile image was found',
-                    btnText: 'OK',
-                    onPressed: () {
-                      Navigator.pop(context);
-                      //setState(() {});
-                    }).showAlert(context).show();
-              }
-            },
-            child: Text('Delete picture'),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            'Change Display Name',
-          ),
-          Padding(
-            padding: EdgeInsets.all(12),
-            child: TextField(
-              controller: controller,
-              textAlign: TextAlign.center,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: gradMain,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 100.0,
+              backgroundImage: currentImage,
+              backgroundColor: Colors.transparent,
             ),
-          ),
-        ],
+            TextButton(
+              onPressed: () async {
+                PermissionStatus status =
+                    await Setting().getPermissionForStorage();
+                if (status.isGranted) {
+                  profileImage = await Setting().getImage();
+                }
+                setState(() {});
+              },
+              child: Text('Change picture'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (currentImage != AssetImage('assets/profile-pic.png')) {
+                  ShowAlert(
+                      alertTitle: 'Delete Your Profile Picture',
+                      alertContent:
+                          'Are you sure you want to delete your profile picture?',
+                      btnText: 'Delete',
+                      onPressed: () async {
+                        setState(() {
+                          profileImage = null;
+                        });
+                        Setting().deleteImage();
+                        Navigator.pop(context);
+                      }).showAlertTwoButtons(context).show();
+                } else {
+                  ShowAlert(
+                      alertTitle: 'No Profile Picture',
+                      alertContent: 'No profile image was found',
+                      btnText: 'OK',
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }).showAlert(context).show();
+                }
+                setState(() {});
+              },
+              child: Text('Delete picture'),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              'Change Display Name',
+            ),
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: TextField(
+                controller: controller,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

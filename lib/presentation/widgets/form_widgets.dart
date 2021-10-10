@@ -250,6 +250,9 @@ class FormWidgets {
 
   Widget buildResetPasswordButton() {
     return TextButton(
+      /*style: TextButton.styleFrom(
+        backgroundColor: Colors.white,
+      ),*/
       onPressed: () {
         try {
           _email = emailController.text;
@@ -280,7 +283,10 @@ class FormWidgets {
           print('Something went wrong + $e');
         }
       },
-      child: Text('Reset Password?'),
+      child: Text(
+        'Reset Password?',
+        style: TextStyle(color: Colors.black),
+      ),
     );
   }
 

@@ -6,7 +6,12 @@ class Navigation {
     return Navigator.pushNamed(context, route);
   }
 
-  Future replaceScreen(var context, String route) {
+  Future popScreen(var context, String route) async {
+    return Navigator.of(context).popUntil((route) => route.isFirst);
+    // return Navigator.pushReplacementNamed(context, route);
+  }
+
+  Future replaceScreen(var context, String route) async {
     return Navigator.pushReplacementNamed(context, route);
   }
 }

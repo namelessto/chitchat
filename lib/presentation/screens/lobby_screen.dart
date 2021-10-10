@@ -1,4 +1,5 @@
 import 'package:chitchat/app_logic/controller/lobby_controller.dart';
+import 'package:chitchat/app_logic/controller/navigation_controller.dart';
 import 'package:chitchat/data/set_get_db.dart';
 import 'package:chitchat/presentation/widgets/alert_dialog.dart';
 import 'package:chitchat/presentation/widgets/chats_list.dart';
@@ -6,7 +7,9 @@ import 'package:chitchat/presentation/widgets/search_bar.dart';
 import 'package:chitchat/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class LobbyScreen extends StatefulWidget {
   const LobbyScreen({Key key}) : super(key: key);
@@ -34,7 +37,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
   Widget build(BuildContext context) {
     //print("displayName = " + FirebaseAuth.instance.currentUser.displayName);
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        gradient: gradAppBar,
         automaticallyImplyLeading: false,
         title: Text('Chitchat'),
         centerTitle: true,
@@ -48,7 +52,9 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 onPressed: () {
                   SetData().updateDeviceTokenLogOut();
                   FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacementNamed(context, welcomeScreenID);
+                  GoogleSignIn().disconnect();
+                  Navigation().popScreen(context, welcomeScreenID);
+                  Navigation().replaceScreen(context, welcomeScreenID);
                 }).showAlertTwoButtons(context).show();
           },
         ),
@@ -65,15 +71,20 @@ class _LobbyScreenState extends State<LobbyScreen> {
         inAsyncCall: showSpinner,
         progressIndicator: CircularProgressIndicator(),
         child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: <Widget>[
-                SearchBar(),
-                Expanded(
-                  child: ChatsList(loggedUser),
-                ),
-              ],
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: gradMain,
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                children: <Widget>[
+                  SearchBar(),
+                  Expanded(
+                    child: ChatsList(loggedUser),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

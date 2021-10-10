@@ -1,4 +1,5 @@
 import 'package:auto_direction/auto_direction.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatTextField extends StatefulWidget {
@@ -15,43 +16,45 @@ class _ChatTextFieldState extends State<ChatTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20,
-        top: 5,
-        bottom: 5,
-        right: 10,
-      ),
-      child: AutoDirection(
-        onDirectionChange: (isRTL) {
+    return AutoDirection(
+      onDirectionChange: (isRTL) {
+        setState(() {
+          this.isRTL = isRTL;
+        });
+      },
+      text: text,
+      child: TextField(
+        controller: widget.controller,
+        maxLines: 5,
+        minLines: 1,
+        onChanged: (str) {
           setState(() {
-            this.isRTL = isRTL;
+            text = str;
+            str = str.trimLeft();
           });
         },
-        text: text,
-        child: TextField(
-          controller: widget.controller,
-          maxLines: 5,
-          minLines: 1,
-          onChanged: (str) {
-            setState(() {
-              text = str;
-              str = str.trimLeft();
-            });
-          },
-          decoration: InputDecoration(
-            hintText: 'Type your message here',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 8, right: 8, top: 12),
+          isDense: true,
+          filled: true,
+          focusColor: Colors.white,
+          fillColor: Colors.white,
+          hintText: 'Type your message here',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide(color: Colors.transparent),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
       ),

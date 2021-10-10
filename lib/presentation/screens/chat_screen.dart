@@ -1,8 +1,10 @@
 import 'package:chitchat/app_logic/controller/chat_controller.dart';
 import 'package:chitchat/presentation/widgets/chat_messages.dart';
 import 'package:chitchat/presentation/widgets/chat_textfield.dart';
+import 'package:chitchat/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({this.targetUid, this.targetDisplayName});
@@ -29,39 +31,53 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        gradient: gradAppBar,
         title: Text(widget.targetDisplayName),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            ChatMessages(
-              userUID: loggedUser.uid,
-              targetUID: widget.targetUid,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: ChatTextField(
-                    controller: _controller,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: gradMain,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              ChatMessages(
+                userUID: loggedUser.uid,
+                targetUID: widget.targetUid,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        bottom: 6,
+                      ),
+                      child: ChatTextField(
+                        controller: _controller,
+                      ),
+                    ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send_rounded),
-                  onPressed: () {
-                    if (_controller.text.isNotEmpty) {
-                      _controller.text = _controller.text.trim();
-                      Chat().encryptText(loggedUser.uid, widget.targetUid, _controller.text);
-                    }
-                    _controller.clear();
-                  },
-                ),
-              ],
-            ),
-          ],
+                  IconButton(
+                    icon: Icon(Icons.send_rounded),
+                    onPressed: () {
+                      if (_controller.text.isNotEmpty) {
+                        _controller.text = _controller.text.trim();
+                        Chat().encryptText(
+                            loggedUser.uid, widget.targetUid, _controller.text);
+                      }
+                      _controller.clear();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

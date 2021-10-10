@@ -24,6 +24,7 @@ const textFieldDecoration = InputDecoration(
   fillColor: Colors.white,
   focusColor: Colors.white,
   labelStyle: TextStyle(
+    color: Color(0xFF000000),
     fontSize: 25.0,
   ),
   contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
@@ -31,13 +32,38 @@ const textFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(12.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+    borderSide: BorderSide(color: Colors.indigo, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(12.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
+    borderSide: BorderSide(color: Colors.indigo, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(12.0)),
   ),
+);
+
+// ---------- Gradient Scheme ----------
+const gradMain = LinearGradient(
+  colors: [
+    Color(0xFFFFFFFF),
+    Color(0xFF98A9ED),
+  ],
+  end: Alignment.bottomRight,
+  begin: Alignment.topLeft,
+);
+
+const gradSecond = LinearGradient(
+  colors: [
+    Color(0xFF95B1FF),
+    Colors.indigoAccent,
+  ],
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+);
+
+const gradAppBar = LinearGradient(
+  colors: [Colors.blueAccent, Colors.indigo],
+  begin: Alignment.bottomRight,
+  end: Alignment.topLeft,
 );
 
 // ---------- Collections Paths ----------

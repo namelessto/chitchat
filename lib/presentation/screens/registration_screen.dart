@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:chitchat/utilities/constants.dart';
 import 'package:chitchat/presentation/widgets/form_widgets.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key key}) : super(key: key);
@@ -9,7 +11,8 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); //Needed to control the form
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); //Needed to control the form
 
   final TextEditingController _pwController1 = new TextEditingController();
   final TextEditingController _pwController2 = new TextEditingController();
@@ -40,9 +43,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    FormWidgets formWidgets = new FormWidgets(_formKey, context); //Pass _formKey to FormWidget to save state
+    FormWidgets formWidgets = new FormWidgets(
+        _formKey, context); //Pass _formKey to FormWidget to save state
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        gradient: gradAppBar,
         title: Text(
           'Register',
           style: TextStyle(
@@ -51,36 +56,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         centerTitle: true,
       ),
-      backgroundColor: Color(0xEEFFFFFF),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(30.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                formWidgets.buildDisplayName(),
-                formWidgets.buildEmail(_emailController),
-                formWidgets.buildNickname(),
-                formWidgets.buildPassword(
-                  _pwController1,
-                  secureText1,
-                  changeSecureText1,
-                ),
-                Text(
-                  'Password must contain at least 8 characters, 1 uppercase, 1 lowercase and 1 number.',
-                ),
-                formWidgets.buildConfirmPassword(
-                  _pwController1,
-                  _pwController2,
-                  secureText2,
-                  changeSecureText2,
-                ),
-                formWidgets.buildSubmitButton(
-                  saveForm,
-                ),
-              ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: gradMain,
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(25.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  formWidgets.buildDisplayName(),
+                  formWidgets.buildEmail(_emailController),
+                  formWidgets.buildNickname(),
+                  formWidgets.buildPassword(
+                    _pwController1,
+                    secureText1,
+                    changeSecureText1,
+                  ),
+                  Text(
+                    'Password must contain at least 8 characters, 1 uppercase, 1 lowercase and 1 number.',
+                  ),
+                  formWidgets.buildConfirmPassword(
+                    _pwController1,
+                    _pwController2,
+                    secureText2,
+                    changeSecureText2,
+                  ),
+                  formWidgets.buildSubmitButton(
+                    saveForm,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

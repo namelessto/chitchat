@@ -1,3 +1,4 @@
+import 'package:chitchat/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -16,7 +17,14 @@ class ShowAlert {
       desc: alertContent,
       buttons: [
         DialogButton(
-          child: Text(btnText),
+          height: 30,
+          gradient: gradSecond,
+          child: Text(
+            btnText,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: onPressed,
         ),
       ],
@@ -30,11 +38,25 @@ class ShowAlert {
       desc: alertContent,
       buttons: [
         DialogButton(
-          child: Text(btnText),
+          height: 30,
+          gradient: gradSecond,
+          child: Text(
+            btnText,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: onPressed,
         ),
         DialogButton(
-          child: Text('Cancel'),
+          height: 30,
+          gradient: gradSecond,
+          child: Text(
+            'Cancel',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },

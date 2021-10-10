@@ -13,6 +13,7 @@ class ChatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
         backgroundImage: image != null
             ? image != ''
                 ? NetworkImage(image)
