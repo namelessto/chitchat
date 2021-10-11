@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class LobbyScreen extends StatefulWidget {
   const LobbyScreen({Key key}) : super(key: key);
@@ -37,13 +36,23 @@ class _LobbyScreenState extends State<LobbyScreen> {
   Widget build(BuildContext context) {
     //print("displayName = " + FirebaseAuth.instance.currentUser.displayName);
     return Scaffold(
-      appBar: NewGradientAppBar(
-        gradient: gradAppBar,
+      appBar: AppBar(
+        /*iconTheme: IconThemeData(
+          color: Colors.black,
+        ),*/
+        //gradient: gradAppBar,
         automaticallyImplyLeading: false,
-        title: Text('Chitchat'),
+        title: Text(
+          'Chitchat',
+          /*style: TextStyle(
+            color: Colors.black,
+          ),*/
+        ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.exit_to_app),
+          icon: Icon(
+            Icons.exit_to_app,
+          ),
           onPressed: () {
             ShowAlert(
                 alertTitle: 'Logout',
@@ -60,7 +69,9 @@ class _LobbyScreenState extends State<LobbyScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: Icon(
+              Icons.settings,
+            ),
             onPressed: () {
               Navigator.pushNamed(context, settingScreenID);
             },
@@ -73,7 +84,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
         child: SafeArea(
           child: Container(
             decoration: BoxDecoration(
-              gradient: gradMain,
+              color: Color(0xFFF0EBD8),
+              //gradient: gradMain,
             ),
             child: Padding(
               padding: EdgeInsets.all(10.0),

@@ -27,16 +27,20 @@ const textFieldDecoration = InputDecoration(
     color: Color(0xFF000000),
     fontSize: 25.0,
   ),
-  contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+  contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(12.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.indigo, width: 1.0),
+    borderSide: BorderSide(
+      color: Colors.transparent,
+    ),
     borderRadius: BorderRadius.all(Radius.circular(12.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.indigo, width: 2.0),
+    borderSide: BorderSide(
+      color: Colors.transparent,
+    ),
     borderRadius: BorderRadius.all(Radius.circular(12.0)),
   ),
 );
@@ -44,24 +48,27 @@ const textFieldDecoration = InputDecoration(
 // ---------- Gradient Scheme ----------
 const gradMain = LinearGradient(
   colors: [
-    Color(0xFFFFFFFF),
-    Color(0xFF98A9ED),
+    Color(0xFFFCF6EE),
+    Color(0xFFFCF6DC),
   ],
-  end: Alignment.bottomRight,
-  begin: Alignment.topLeft,
+  end: Alignment.bottomCenter,
+  begin: Alignment.topCenter,
 );
 
 const gradSecond = LinearGradient(
   colors: [
     Color(0xFF95B1FF),
-    Colors.indigoAccent,
+    Color(0xFF1C78F8),
   ],
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );
 
 const gradAppBar = LinearGradient(
-  colors: [Colors.blueAccent, Colors.indigo],
+  colors: [
+    Color(0xFFFEEDCA),
+    Color(0xFFFFEFBA),
+  ],
   begin: Alignment.bottomRight,
   end: Alignment.topLeft,
 );

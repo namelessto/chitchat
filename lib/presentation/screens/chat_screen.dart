@@ -1,16 +1,19 @@
 import 'package:chitchat/app_logic/controller/chat_controller.dart';
 import 'package:chitchat/presentation/widgets/chat_messages.dart';
 import 'package:chitchat/presentation/widgets/chat_textfield.dart';
-import 'package:chitchat/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
-  ChatScreen({this.targetUid, this.targetDisplayName});
+  ChatScreen({
+    this.targetUid,
+    this.targetDisplayName,
+    this.targetImage,
+  });
 
   final String targetUid;
   final String targetDisplayName;
+  final String targetImage;
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -31,15 +34,42 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NewGradientAppBar(
-        gradient: gradAppBar,
-        title: Text(widget.targetDisplayName),
-        centerTitle: true,
+      appBar: AppBar(
+        /*iconTheme: IconThemeData(
+          color: Colors.black,
+        ),*/
+        //gradient: gradAppBar,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              backgroundImage: widget.targetImage != null
+                  ? widget.targetImage != ''
+                      ? NetworkImage(widget.targetImage)
+                      : AssetImage('assets/profile-pic.png')
+                  : AssetImage('assets/profile-pic.png'),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              widget.targetDisplayName,
+              /*style: TextStyle(
+                color: Colors.black,
+              ),*/
+            ),
+            SizedBox(
+              width: 30,
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradMain,
+            color: Color(0xFFF0EBD8),
+            //gradient: gradMain,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

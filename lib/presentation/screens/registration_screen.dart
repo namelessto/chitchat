@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chitchat/utilities/constants.dart';
 import 'package:chitchat/presentation/widgets/form_widgets.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key key}) : super(key: key);
@@ -46,8 +44,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     FormWidgets formWidgets = new FormWidgets(
         _formKey, context); //Pass _formKey to FormWidget to save state
     return Scaffold(
-      appBar: NewGradientAppBar(
-        gradient: gradAppBar,
+      appBar: AppBar(
+        //gradient: gradAppBar,
         title: Text(
           'Register',
           style: TextStyle(
@@ -59,7 +57,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: gradMain,
+          color: Color(0xFFF0EBD8),
+          //gradient: gradMain,
         ),
         child: SingleChildScrollView(
           child: Padding(

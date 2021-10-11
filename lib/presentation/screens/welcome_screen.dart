@@ -18,7 +18,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: gradMain,
+          color: Color(0xFFF0EBD8),
+          //gradient: gradMain,
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),

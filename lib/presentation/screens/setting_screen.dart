@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -23,18 +22,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    controller.text = FirebaseAuth.instance.currentUser.displayName;
-    profileImagePath = FirebaseAuth.instance.currentUser.photoURL;
+
     //chooseImage(profileImage);
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.text = FirebaseAuth.instance.currentUser.displayName;
+    profileImagePath = FirebaseAuth.instance.currentUser.photoURL;
     chooseImage(profileImage);
     return Scaffold(
-      appBar: NewGradientAppBar(
-        gradient: gradAppBar,
-        title: Text('Settings'),
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        //gradient: gradAppBar,
+        title: Text(
+          'Settings',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -56,14 +64,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: gradMain,
+          color: Color(0xFFF0EBD8),
+          //gradient: gradMain,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             CircleAvatar(
-              radius: 100.0,
+              radius: 120.0,
               backgroundImage: currentImage,
               backgroundColor: Colors.transparent,
             ),
@@ -87,11 +96,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           'Are you sure you want to delete your profile picture?',
                       btnText: 'Delete',
                       onPressed: () async {
-                        setState(() {
-                          profileImage = null;
-                        });
-                        Setting().deleteImage();
+                        await Setting().deleteImage();
                         Navigator.pop(context);
+                        ShowAlert(
+                            alertTitle: 'Profile Picture Deleted',
+                            alertContent: '',
+                            btnText: 'OK',
+                            onPressed: () {
+                              Navigator.pop(context);
+                              setState(() {
+                                profileImage = null;
+                              });
+                            }).showAlert(context).show();
                       }).showAlertTwoButtons(context).show();
                 } else {
                   ShowAlert(
@@ -113,7 +129,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               'Change Display Name',
             ),
             Padding(
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.symmetric(horizontal: 90),
               child: TextField(
                 controller: controller,
                 textAlign: TextAlign.center,

@@ -1,9 +1,6 @@
 import 'package:chitchat/app_logic/controller/login_controller.dart';
 import 'package:chitchat/presentation/widgets/form_widgets.dart';
-import 'package:chitchat/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -46,12 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
         _formKey, context); //Pass _formKey to FormWidget to save state
 
     return Scaffold(
-      appBar: NewGradientAppBar(
-        gradient: LinearGradient(
-          colors: [Colors.blueAccent, Colors.indigo],
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-        ),
+      appBar: AppBar(
+        //gradient: gradAppBar,
         title: Text(
           'Login',
           style: TextStyle(
@@ -63,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: gradMain,
+          color: Color(0xFFF0EBD8),
+          //gradient: gradMain,
         ),
         child: SingleChildScrollView(
           child: Padding(

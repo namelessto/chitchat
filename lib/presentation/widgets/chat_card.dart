@@ -31,6 +31,7 @@ class ChatCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(
+              targetImage: image,
               targetUid: userID,
               targetDisplayName: displayName,
             ),

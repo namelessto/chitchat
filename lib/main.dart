@@ -52,7 +52,8 @@ Future<void> main() async {
   /// We use this channel in the `AndroidManifest.xml` file to override the
   /// default FCM channel to enable heads up notifications.
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   /// Update the iOS foreground notification presentation options to allow
@@ -106,6 +107,9 @@ class _ChitchatState extends State<Chitchat> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(color: Color(0xFF748CAB)),
+      ),
       navigatorKey: navigatorKey,
       initialRoute: widget.route,
       routes: {
